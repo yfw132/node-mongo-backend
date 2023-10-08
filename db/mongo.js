@@ -18,13 +18,16 @@ const result_data = (status, data, message) => {
   }
 }
 
+const RuleSchema = require('./schema/rule')
+const StaffSchema = require('./schema/staff')
+const VerifySchema = require('./schema/verify')
+const StudentSchema = require('./schema/student')
+
 // 定义权限表模块
-const RuleSchema = mongoose.Schema({
-  ruleName: String,
-  rulePage: Array,
-  notes: String
-})
 const Rule = mongoose.model('Rule', RuleSchema)
+const Staff = mongoose.model('Staff', StaffSchema)
+const Verify = mongoose.model('Verify', VerifySchema)
+const Student = mongoose.model('Student', StudentSchema)
 
 const check_rule = async (station_id, rule_name) => {
   const rules = await Rule.findById(station_id)
@@ -39,20 +42,4 @@ const check_rule = async (station_id, rule_name) => {
   }
 }
 
-const StaffSchema = mongoose.Schema({
-  name: String,
-  phone: String,
-  entryTime: String,
-  station: String,
-  status: { type: Number, default: 0 }
-})
-const Staff = mongoose.model('Staff', StaffSchema)
-
-const VerifySchema = mongoose.Schema({
-  code: String,
-  phone: String,
-  time: Date,
-})
-const Verify = mongoose.model('Verify', VerifySchema)
-
-module.exports = { result_data, check_rule, Rule, Staff, Verify };
+module.exports = { result_data, check_rule, Rule, Staff, Verify, Student };
